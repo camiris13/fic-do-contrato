@@ -261,6 +261,65 @@
         .fm-btn:focus-visible,.fm-chip:focus-visible,#fic-map .leaflet-marker-icon:focus-visible{outline:2px solid #fff;outline-offset:2px}
         .fm-soon{color:#a9bdb0;font-size:11px}
         @media(prefers-reduced-motion:reduce){.fp.on .fp-dot::after{animation:none}}
+
+/* Comentários por parágrafo (mesmo padrão da BRAT, com as cores do Contrato) */
+/* IMPORTANTE: sem `transform` nos ancestrais do pop-up. Um ancestral com transform vira o "containing block" de todo
+   elemento position:fixed dentro dele (bottom sheet, overlay, botões flutuantes) e o pop-up abriria no FIM do capítulo
+   em vez de na tela. O centro é feito com margem negativa. */
+#view-leitura{--read-w:min(1100px,calc(100vw - 24px));width:var(--read-w);position:relative;left:50%;margin-left:calc(var(--read-w) / -2)}
+.contract-comments-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+.contract-comments-grid>.read-card{min-width:0}
+#contract-comments{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;background:#fdfbf7;border:2px solid #00643755;border-top:4px solid #C8102E;border-radius:18px;padding:16px;color:#1e293b;box-shadow:0 8px 24px #0002;font-family:Inter,sans-serif;box-sizing:border-box}
+#contract-comments *{box-sizing:border-box}
+.cc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+.cc-head h2{font-weight:800;color:#006437;font-size:15px;line-height:1.2}
+.cc-sub{font-size:10px;color:#64748b;margin-top:2px}
+.cc-total{margin-left:auto;font-size:10px;font-weight:800;border-radius:999px;padding:3px 9px;background:#006437;color:#fff}
+.cc-paragraph{position:relative;border-radius:7px;padding:5px 8px;margin-left:-8px;margin-right:-8px;cursor:pointer;transition:background .15s ease,box-shadow .15s ease;scroll-margin-top:100px;-webkit-tap-highlight-color:transparent}
+@media(hover:hover){.cc-paragraph:hover{background:#00643710}}
+.cc-paragraph.cc-active{background:#00643718;box-shadow:inset 3px 0 #C8102E}
+.cc-paragraph.cc-has::after{content:attr(data-count);display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;margin-left:8px;padding:0 5px;border-radius:10px;background:#006437;color:#fff;font:700 10px Inter,sans-serif;vertical-align:middle}
+.cc-selbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px;padding:10px 12px;border:1px solid #00643755;border-radius:12px;background:#00643710;font-size:11px}
+.cc-link{color:#475569;text-decoration:underline;font-size:11px;cursor:pointer;background:none;border:0;padding:0}
+.cc-quote{padding:7px 9px;margin:8px 0;border-left:3px solid #C8102E;background:#f2f6f1;color:#475569;font-size:11px;font-style:italic;max-height:9.5em;overflow-y:auto;overflow-wrap:anywhere}
+.cc-label{display:block;font-size:11px;font-weight:700;color:#004225;margin-bottom:4px}
+.cc-input{display:block;width:100%;border:1px solid #b8c7bc;border-radius:10px;padding:9px;background:#fff;color:#18271e;font:12px Inter,sans-serif;outline:none}
+.cc-input:focus{border-color:#006437;box-shadow:0 0 0 2px #00643720}
+#cc-author{min-height:40px;margin-bottom:8px}
+#cc-draft{min-height:82px;resize:vertical}
+.cc-btn{display:block;width:100%;margin-top:8px;border:0;border-radius:12px;background:#006437;color:#fff;padding:10px 14px;font:700 12px Inter,sans-serif;cursor:pointer;transition:background .15s}
+.cc-btn:hover{background:#004225}
+.cc-btn:disabled{opacity:.5;cursor:default}
+.cc-status{font-size:10px;color:#64748b;margin-top:8px}
+.cc-divider{border-top:1px solid #00643730;margin:14px 0}
+.cc-empty{font-size:12px;font-style:italic;color:#64748b}
+.cc-card{padding:12px;border:1px solid #00643730;border-radius:13px;background:#fff;color:#1e293b;margin-top:10px;font:12px/1.6 Inter,sans-serif;overflow-wrap:anywhere}
+.cc-card:first-child{margin-top:0}
+.cc-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cc-card-top strong{font-size:11px}
+.cc-card-top span{font-size:9px;color:#94a3b8}
+.cc-jump{font-size:9px;color:#006437;text-decoration:underline;margin-top:4px;cursor:pointer;background:none;border:0;padding:0}
+.cc-card p{margin-top:8px;white-space:pre-wrap}
+.cc-delete{color:#C8102E;font-size:10px;text-decoration:underline;cursor:pointer;background:none;border:0;padding:0}
+#cc-overlay{display:none;position:fixed;inset:0;z-index:1998;background:rgba(0,0,0,.64);touch-action:none;-webkit-tap-highlight-color:transparent}
+#cc-open{display:none;position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));right:18px;z-index:1900;align-items:center;gap:7px;padding:12px 17px;border:0;border-radius:100px;background:#006437;color:#fff;font:800 13px Inter,sans-serif;box-shadow:0 6px 24px #0005}
+#cc-close{display:none;align-items:center;justify-content:center;min-width:44px;min-height:44px;flex:none;border:0;border-radius:50%;background:#7d7d7d22;font-size:22px;cursor:pointer;color:#1e293b}
+#cc-selection{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(78px + env(safe-area-inset-bottom));z-index:1950;align-items:center;gap:7px;padding:11px 18px;border-radius:100px;background:#0b1510;color:#2fd17a;border:1px solid #2fd17a;font:800 13px Inter,sans-serif;white-space:nowrap;box-shadow:0 6px 24px #0006;-webkit-tap-highlight-color:transparent}
+body.cc-locked{position:fixed;left:0;right:0;width:100%;overflow:hidden}
+@media(max-width:800px){
+  .contract-comments-grid{grid-template-columns:minmax(0,1fr)}
+  #view-leitura{--read-w:calc(100vw - 20px)}
+  #contract-comments{position:fixed;top:auto;left:0;right:0;bottom:var(--kb-offset,0px);width:100%;max-height:88vh;max-height:min(88dvh,780px,var(--vv-max,100dvh));overflow-y:auto;overscroll-behavior:contain;z-index:1999;border-radius:22px 22px 0 0;transform:translateY(105%);visibility:hidden;transition:transform .25s ease,visibility .25s;padding:20px 18px max(22px,env(safe-area-inset-bottom))}
+  #contract-comments.cc-open{transform:translateY(0);visibility:visible}
+  #cc-overlay.cc-open{display:block}
+  /* `body #id`: especificidade maior que as regras base dos botões, que vêm antes/depois e anulariam o display */
+  body #cc-open{display:flex}
+  body #cc-close{display:inline-flex}
+  body #cc-selection.cc-visible{display:inline-flex}
+  .cc-input{font-size:16px}
+}
+@media(min-width:801px){#cc-overlay,#cc-open,#cc-close,#cc-selection{display:none!important}}
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-3 sm:p-6 text-slate-800">
@@ -504,7 +563,7 @@
 
         <!-- SEÇÃO VIEW: LEITURA DO CAPÍTULO -->
         <div id="view-leitura" class="hidden">
-            <article class="read-card">
+            <div class="contract-comments-grid"><article class="read-card">
                 <div class="read-toolbar">
                     <button class="read-btn" onclick="closeReader()"><i class="fa-solid fa-list-ol"></i> Capítulos</button>
                     <div class="flex items-center gap-1">
@@ -518,6 +577,33 @@
                     <button id="btn-next" class="read-btn red" onclick="goChapter(1)">Próximo <i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </article>
+
+            <!-- Comentários: barra lateral no desktop, bottom sheet no celular -->
+            <aside id="contract-comments" aria-label="Comentários dos leitores">
+                <div class="cc-head">
+                    <div>
+                        <h2 id="cc-dialog-title">💬 Comentários</h2>
+                        <p class="cc-sub">Anotações por parágrafo ou trecho</p>
+                    </div>
+                    <span id="cc-total" class="cc-total">0</span>
+                    <button id="cc-close" type="button" onclick="closeCommentsModal()" aria-label="Fechar comentários">×</button>
+                </div>
+                <div class="cc-selbar">
+                    <span id="cc-target-label" style="flex:1">Toque ou clique em um parágrafo para comentar.</span>
+                    <button type="button" class="cc-link" onclick="clearCommentTarget()">Limpar</button>
+                </div>
+                <div id="cc-quote-preview" class="hidden cc-quote"></div>
+                <label for="cc-author" class="cc-label">Seu nome ou apelido <span aria-hidden="true">*</span></label>
+                <input id="cc-author" class="cc-input" type="text" maxlength="30" autocomplete="off" autocorrect="off" autocapitalize="words" data-form-type="other" data-lpignore="true" placeholder="Como você quer aparecer nos comentários?" required>
+                <textarea id="cc-draft" class="cc-input" maxlength="1500" autocomplete="off" placeholder="Escreva seu comentário..."></textarea>
+                <button id="cc-submit" type="button" class="cc-btn" onclick="addParagraphComment()">Adicionar comentário</button>
+                <p id="cc-status" class="cc-status" role="status">Conectando aos comentários...</p>
+                <div class="cc-divider"></div>
+                <div id="cc-list"><p class="cc-empty">Selecione um parágrafo para ver os comentários.</p></div>
+            </aside></div>
+            <div id="cc-overlay" onclick="closeCommentsModal()" aria-hidden="true"></div>
+            <button id="cc-open" type="button" onclick="openCommentsModal()" aria-label="Abrir comentários">💬 Comentários <span id="cc-floating-total">0</span></button>
+            <button id="cc-selection" type="button" onclick="commentOnPendingSelection()" aria-label="Comentar o trecho selecionado">💬 Comentar trecho</button>
         </div>
 
         
@@ -738,6 +824,7 @@
             document.getElementById('view-mapa').classList.toggle('hidden', tab !== 'mapa');
             document.getElementById('btn-mapa').className = tab === 'mapa' ? TAB_ON : TAB_OFF;
             if(tab === 'mapa') setTimeout(initFicMap,80); else ficTourStop();
+            if (tab !== 'leitura' && window.commentsLeaveReader) window.commentsLeaveReader();
             document.getElementById('btn-pasta').className = tab === 'pasta' ? TAB_ON : TAB_OFF;
             document.getElementById('btn-capitulos').className = (tab === 'capitulos' || tab === 'leitura') ? TAB_ON : TAB_OFF;
             if (tab === 'pasta') history.replaceState(null, '', location.pathname + location.search);
@@ -957,6 +1044,7 @@ Enquanto não te chegam os alegres e belos olhos daquela que, em lágrimas, veio
             document.title = 'Como conquistar (e perder) uma mulher em 30 dias';
             switchTab('leitura');
             window.scrollTo(0, 0);
+            if (window.commentsChapterRendered) window.commentsChapterRendered();
         }
 
         function goChapter(delta) {
@@ -992,6 +1080,8 @@ Enquanto não te chegam os alegres e belos olhos daquela que, em lágrimas, veio
 
         document.addEventListener('keydown', (e) => {
             if (document.getElementById('view-leitura').classList.contains('hidden')) return;
+            const t = e.target;
+            if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable))) return;
             if (e.key === 'ArrowLeft') goChapter(-1);
             if (e.key === 'ArrowRight') goChapter(1);
         });
@@ -1004,5 +1094,465 @@ Enquanto não te chegam os alegres e belos olhos daquela que, em lágrimas, veio
             if (location.hash) route();
         })();
     </script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(() => {
+    // =====================================================================================
+    // FIREBASE DO CONTRATO — cole abaixo as credenciais do SEU projeto (Console do Firebase →
+    // Configurações do projeto → Seus apps → app Web → "Configuração do SDK").
+    // Enquanto estiver vazio, a leitura funciona normalmente e os comentários ficam desativados.
+    // =====================================================================================
+    const firebaseConfig = {
+        apiKey: "AIzaSyCDZeJfMueFsczSZjGTkLzhxbiBPgyw36g",
+        authDomain: "fic-do-contrato.firebaseapp.com",
+        projectId: "fic-do-contrato",
+        storageBucket: "fic-do-contrato.firebasestorage.app",
+        messagingSenderId: "56624585632",
+        appId: "1:56624585632:web:0724960983fe3a240b22c5",
+        measurementId: "G-MHLH4F2WEQ"
+    };
+    const COLLECTION = "contrato_comments";
+
+    const $ = id => document.getElementById(id);
+    let db = null, authReady = false, unsubscribe = null;
+    let comments = [], selParagraph = null, selQuote = "", mode = "off";
+
+    const configured = () => Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId);
+    const chapterNow = () => Number(currentChapter);
+    const inReader = () => { const v = $("view-leitura"); return !!v && !v.classList.contains("hidden"); };
+    const safe = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const setStatus = msg => { const el = $("cc-status"); if (el) el.textContent = msg; };
+    const pIndexOf = c => Number(c.paragraphIndex ?? c.paragraph);
+    const timeOf = c => c.createdAt?.toMillis ? c.createdAt.toMillis() : (c.createdAt ? Number(c.createdAt) : Date.now());
+    const textRoot = () => document.querySelector("#read-body > .read-text");
+
+    function firebaseErrorMessage(error) {
+        const code = error?.code || "";
+        if (code === "permission-denied" || code === "firestore/permission-denied")
+            return "Acesso negado pelo Firestore. Confira as regras de segurança da coleção " + COLLECTION + ".";
+        if (code.includes("operation-not-allowed") || code.includes("admin-restricted"))
+            return "Ative o provedor Anônimo em Firebase Authentication → Sign-in method.";
+        if (code.includes("unauthorized-domain"))
+            return "Adicione o domínio do site aos domínios autorizados do Firebase Authentication.";
+        if (code.includes("api-key") || code.includes("invalid-api-key"))
+            return "Chave de API do Firebase inválida. Confira o firebaseConfig.";
+        if (code.includes("network") || code === "unavailable")
+            return "Não foi possível conectar ao Firebase. Confira sua internet e tente novamente.";
+        return "Erro no Firebase (" + (code || error?.message || "desconhecido") + "). Confira o console.";
+    }
+
+    async function initializeComments() {
+        if (!configured()) {
+            setStatus("Comentários ainda não configurados neste site.");
+            const btn = $("cc-submit"); if (btn) btn.disabled = true;
+            return;
+        }
+        if (typeof firebase === "undefined") {
+            setStatus("Não foi possível carregar o Firebase. Confira sua conexão e recarregue a página.");
+            return;
+        }
+        try {
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            setStatus("Conectando...");
+            await firebase.auth().signInAnonymously();
+            authReady = true;
+            mode = "firebase";
+            setStatus("Pronto para comentar");
+            if (inReader() && currentChapter !== null) loadChapterComments();
+        } catch (error) {
+            authReady = false;
+            mode = "unavailable";
+            console.error("Falha ao inicializar Firebase:", error);
+            setStatus(firebaseErrorMessage(error));
+        }
+    }
+
+    function loadChapterComments() {
+        if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+        comments = [];
+        if (mode === "firebase" && db && authReady) {
+            unsubscribe = db.collection(COLLECTION).where("chapterId", "==", chapterNow())
+                .onSnapshot(snapshot => {
+                    comments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    renderCounts();
+                    renderList();
+                }, error => {
+                    console.error("Erro ao carregar comentários:", error);
+                    setStatus(firebaseErrorMessage(error));
+                });
+        } else {
+            renderCounts();
+            renderList();
+        }
+    }
+
+    // ===== Pop-up: bottom sheet no celular, barra lateral no desktop =====
+    // Fonte única do breakpoint (precisa bater com o @media (max-width: 800px) do CSS).
+    const mobileQuery = window.matchMedia("(max-width: 800px)");
+    const isMobile = () => mobileQuery.matches;
+    let scrollY0 = 0, returnFocus = null, historyPushed = false, syncFrame = 0;
+
+    // Trava a rolagem da página atrás do pop-up (inclusive no iOS Safari).
+    function lockPageScroll() {
+        if (document.body.classList.contains("cc-locked")) return;
+        scrollY0 = window.pageYOffset || document.documentElement.scrollTop || 0;
+        document.body.style.top = "-" + scrollY0 + "px";
+        document.body.classList.add("cc-locked");
+    }
+    function unlockPageScroll() {
+        if (!document.body.classList.contains("cc-locked")) return;
+        document.body.classList.remove("cc-locked");
+        document.body.style.top = "";
+        const root = document.documentElement, prev = root.style.scrollBehavior;
+        root.style.scrollBehavior = "auto"; // volta na hora, mesmo que a página use rolagem suave
+        window.scrollTo(0, scrollY0);
+        root.style.scrollBehavior = prev;
+    }
+
+    // Teclado virtual: o navegador só encolhe a "visual viewport"; sem isto o campo fica escondido atrás do teclado.
+    function applyViewport() {
+        syncFrame = 0;
+        const sheet = $("contract-comments"), vv = window.visualViewport;
+        if (!sheet || !vv || !sheet.classList.contains("cc-open")) return;
+        const keyboard = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+        sheet.style.setProperty("--kb-offset", (keyboard > 80 ? keyboard : 0) + "px"); // ignora ruído (barra de endereço etc.)
+        sheet.style.setProperty("--vv-max", Math.round(vv.height * 0.96) + "px");
+    }
+    function syncViewport() { if (!syncFrame) syncFrame = requestAnimationFrame(applyViewport); }
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", syncViewport);
+        window.visualViewport.addEventListener("scroll", syncViewport);
+    }
+    document.addEventListener("focusin", e => {
+        const sheet = $("contract-comments");
+        if (!isMobile() || !sheet || !sheet.classList.contains("cc-open") || !sheet.contains(e.target)) return;
+        if (!/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+        setTimeout(() => { syncViewport(); try { e.target.scrollIntoView({ block: "nearest", behavior: "auto" }); } catch (err) {} }, 350);
+    });
+    document.addEventListener("focusout", e => {
+        const sheet = $("contract-comments");
+        if (!sheet || !sheet.classList.contains("cc-open") || !sheet.contains(e.target)) return;
+        setTimeout(() => {
+            if (sheet.contains(document.activeElement) && /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
+            sheet.style.setProperty("--kb-offset", "0px");
+            syncViewport();
+        }, 0);
+    });
+
+    // Botão "voltar" do Android / gesto de voltar do iOS fecha o pop-up em vez de sair da leitura.
+    function pushHistory() {
+        if (historyPushed) return;
+        try { history.pushState({ contratoComments: true }, "", location.href); historyPushed = true; } catch (e) {}
+    }
+    window.addEventListener("popstate", () => {
+        const sheet = $("contract-comments");
+        if (sheet && sheet.classList.contains("cc-open")) { historyPushed = false; closeModal({ fromHistory: true }); }
+    });
+
+    function openModal() {
+        if (!isMobile()) return;
+        const sheet = $("contract-comments"), overlay = $("cc-overlay");
+        if (!sheet || !overlay) return;
+        if (!sheet.classList.contains("cc-open")) {
+            returnFocus = document.activeElement;
+            pushHistory(); // antes de travar a rolagem, para o histórico guardar a posição real
+            lockPageScroll();
+            sheet.classList.add("cc-open");
+            overlay.classList.add("cc-open");
+            sheet.setAttribute("role", "dialog");
+            sheet.setAttribute("aria-modal", "true");
+            sheet.setAttribute("aria-labelledby", "cc-dialog-title");
+            sheet.scrollTop = 0;
+        }
+        applyViewport();
+        const closeBtn = $("cc-close");
+        if (closeBtn) closeBtn.focus({ preventScroll: true });
+    }
+
+    function closeModal(options) {
+        const fromHistory = !!(options && options.fromHistory);
+        const sheet = $("contract-comments"), overlay = $("cc-overlay");
+        if (!sheet || !overlay) return;
+        const wasOpen = sheet.classList.contains("cc-open");
+        if (wasOpen && sheet.contains(document.activeElement)) document.activeElement.blur(); // recolhe o teclado
+        sheet.classList.remove("cc-open");
+        overlay.classList.remove("cc-open");
+        sheet.removeAttribute("role");
+        sheet.removeAttribute("aria-modal");
+        sheet.removeAttribute("aria-labelledby");
+        sheet.style.removeProperty("--kb-offset");
+        sheet.style.removeProperty("--vv-max");
+        unlockPageScroll();
+        if (historyPushed) {
+            historyPushed = false;
+            if (!fromHistory) { try { history.back(); } catch (e) {} }
+        }
+        if (wasOpen && returnFocus && returnFocus !== document.body && document.contains(returnFocus)) {
+            try { returnFocus.focus({ preventScroll: true }); } catch (e) {}
+        }
+        returnFocus = null;
+        if (wasOpen) setTimeout(updateSelectionChip, 0);
+    }
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+    (function watchBreakpoint() {
+        const onChange = e => { if (!e.matches) closeModal(); };
+        if (mobileQuery.addEventListener) mobileQuery.addEventListener("change", onChange);
+        else if (mobileQuery.addListener) mobileQuery.addListener(onChange); // Safari < 14
+    })();
+
+    // ===== Seleção de parágrafos/trechos =====
+    const QUOTE_MAX = 500;
+    let selectionActiveOnPress = false, pendingChip = null, chipTimer = null, chipPressed = false;
+
+    function normalizeQuote(text) {
+        const clean = String(text || "").replace(/\s+/g, " ").trim();
+        return clean.length > QUOTE_MAX ? clean.slice(0, QUOTE_MAX).trimEnd() + "…" : clean;
+    }
+    function paragraphLabel(index) {
+        const root = textRoot();
+        const el = root && root.querySelector('[data-paragraph-index="' + Number(index) + '"]');
+        return el && el.dataset.paragraphNumber ? "Parágrafo " + el.dataset.paragraphNumber : "Parágrafo " + (Number(index) + 1);
+    }
+
+    function selectParagraph(index, quote = "", options = {}) {
+        selParagraph = Number(index);
+        selQuote = normalizeQuote(quote);
+        let target = null;
+        document.querySelectorAll("#read-body .cc-paragraph").forEach(p => {
+            const active = Number(p.dataset.paragraphIndex) === selParagraph;
+            p.classList.toggle("cc-active", active);
+            if (active) target = p;
+        });
+        const label = $("cc-target-label");
+        if (label) label.textContent = "Capítulo " + chapterNow() + " · " + paragraphLabel(selParagraph);
+        const preview = $("cc-quote-preview");
+        if (preview) {
+            // Com seleção: mostra o trecho (ele será salvo). Sem seleção: só lembra qual é o parágrafo
+            // (útil no celular, onde o pop-up cobre o texto); isso NÃO é salvo no comentário.
+            let shown = selQuote;
+            if (!shown && target) {
+                const snippet = normalizeQuote(target.innerText || target.textContent);
+                shown = snippet.length > 140 ? snippet.slice(0, 140).trimEnd() + "…" : snippet;
+            }
+            preview.textContent = shown ? "“" + shown + "”" : "";
+            preview.classList.toggle("hidden", !shown);
+        }
+        renderList();
+        if (options.openPanel !== false) openModal();
+    }
+
+    function clearTarget() {
+        selParagraph = null;
+        selQuote = "";
+        document.querySelectorAll("#read-body .cc-paragraph").forEach(p => p.classList.remove("cc-active"));
+        $("cc-target-label").textContent = "Toque ou clique em um parágrafo para comentar.";
+        $("cc-quote-preview").classList.add("hidden");
+        renderList();
+    }
+
+    // Texto selecionado dentro do capítulo, ancorado no primeiro parágrafo que a seleção toca.
+    function getSelectionInfo() {
+        const container = textRoot();
+        const selection = window.getSelection ? window.getSelection() : null;
+        if (!container || !selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
+        const range = selection.getRangeAt(0);
+        if (!container.contains(range.startContainer) || !container.contains(range.endContainer)) return null;
+        const quote = normalizeQuote(selection.toString());
+        if (!quote) return null;
+        const block = Array.from(container.querySelectorAll(".cc-paragraph")).find(el => range.intersectsNode(el));
+        if (!block) return null;
+        return { block, index: Number(block.dataset.paragraphIndex), quote };
+    }
+
+    function handleParagraphClick(event) {
+        const block = event.target && event.target.closest ? event.target.closest(".cc-paragraph") : null;
+        if (!block) return;
+        const selection = getSelectionInfo();
+        // No celular, um toque que só desfez/criou uma seleção não abre o pop-up: para comentar um trecho existe o botão "Comentar trecho".
+        if (isMobile() && (selectionActiveOnPress || selection)) return;
+        selectParagraph(block.dataset.paragraphIndex, selection && selection.block === block ? selection.quote : "");
+    }
+    // Desktop: soltar o mouse com texto selecionado comenta o trecho (a barra lateral já está visível).
+    function handleParagraphMouseUp() {
+        if (isMobile()) return;
+        const selection = getSelectionInfo();
+        if (selection) selectParagraph(selection.index, selection.quote);
+    }
+
+    function updateSelectionChip() {
+        const chip = $("cc-selection");
+        if (!chip || chipPressed) return;
+        const sheet = $("contract-comments");
+        const sheetOpen = !!(sheet && sheet.classList.contains("cc-open"));
+        pendingChip = inReader() && isMobile() && !sheetOpen ? getSelectionInfo() : null;
+        chip.classList.toggle("cc-visible", !!pendingChip);
+    }
+    document.addEventListener("selectionchange", () => {
+        clearTimeout(chipTimer);
+        chipTimer = setTimeout(updateSelectionChip, 200); // espera o usuário terminar de arrastar as alças
+    });
+
+    function commentOnPendingSelection() {
+        const info = pendingChip;
+        chipPressed = false;
+        if (!info) return;
+        pendingChip = null;
+        const chip = $("cc-selection");
+        if (chip) chip.classList.remove("cc-visible");
+        selectParagraph(info.index, info.quote);
+        const selection = window.getSelection();
+        if (selection) selection.removeAllRanges(); // some com as alças/menu nativos atrás do pop-up
+    }
+
+    // Marca cada <p> do texto do capítulo como comentável. O índice é a posição entre os <p>
+    // (separadores "* * *" e ornamentos não contam), então continua apontando para o mesmo parágrafo.
+    function setupSelection() {
+        const container = textRoot();
+        if (!container) return;
+        let pCount = 0, number = 0;
+        Array.from(container.children).forEach(block => {
+            if (block.tagName !== "P") return;
+            const index = pCount++;
+            if (!/[\p{L}\p{N}]/u.test(block.textContent || "")) return; // ornamentos não são texto
+            block.classList.add("cc-paragraph");
+            block.dataset.paragraphIndex = index;
+            block.dataset.paragraphNumber = ++number;
+            block.title = "Toque ou clique para comentar";
+        });
+        if (!container.dataset.commentEventsBound) { // o container é recriado a cada capítulo: liga uma vez por container
+            container.dataset.commentEventsBound = "1";
+            container.addEventListener("pointerdown", () => {
+                const s = window.getSelection();
+                selectionActiveOnPress = !!(s && !s.isCollapsed && s.toString().trim());
+            }, { passive: true });
+            container.addEventListener("click", handleParagraphClick);
+            container.addEventListener("mouseup", handleParagraphMouseUp);
+        }
+        const chip = $("cc-selection");
+        if (chip && !chip.dataset.bound) {
+            chip.dataset.bound = "1";
+            // Mantém o trecho "congelado" enquanto o dedo toca o botão (o toque pode limpar a seleção nativa).
+            chip.addEventListener("pointerdown", () => { chipPressed = true; setTimeout(() => { chipPressed = false; }, 900); });
+        }
+    }
+
+    // ===== Publicar / excluir / desenhar =====
+    async function addComment() {
+        const draft = $("cc-draft"), authorInput = $("cc-author");
+        const author = authorInput.value.trim(), text = draft.value.trim();
+        if (!configured()) { setStatus("Comentários ainda não configurados neste site."); return; }
+        if (!author) { setStatus("Informe seu nome ou apelido para enviar o comentário."); authorInput.focus(); return; }
+        if (selParagraph === null) { setStatus("Primeiro toque no parágrafo que deseja comentar."); return; }
+        if (!text) { setStatus("Escreva um comentário antes de enviar."); draft.focus(); return; }
+        if (!authReady || !db || mode !== "firebase") {
+            setStatus("Aguarde a conexão com o Firebase antes de enviar. Se persistir, confira a configuração.");
+            return;
+        }
+        try {
+            await db.collection(COLLECTION).add({
+                chapterId: chapterNow(),
+                paragraphIndex: selParagraph,
+                quote: selQuote,
+                text,
+                author,
+                uid: firebase.auth().currentUser.uid,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            draft.value = "";
+            if (isMobile()) draft.blur(); // recolhe o teclado para o comentário novo aparecer na lista
+            setStatus("Comentário salvo.");
+        } catch (error) {
+            console.error(error);
+            setStatus(firebaseErrorMessage(error));
+        }
+    }
+
+    async function deleteComment(id) {
+        if (!confirm("Excluir este comentário?")) return;
+        try {
+            if (mode === "firebase" && db && authReady) await db.collection(COLLECTION).doc(id).delete();
+        } catch (error) {
+            console.error(error);
+            setStatus("Não foi possível excluir o comentário.");
+        }
+    }
+
+    function renderCounts() {
+        document.querySelectorAll("#read-body .cc-paragraph").forEach(p => {
+            const count = comments.filter(c => pIndexOf(c) === Number(p.dataset.paragraphIndex)).length;
+            p.classList.toggle("cc-has", count > 0);
+            if (count) p.dataset.count = count; else delete p.dataset.count;
+        });
+        const total = $("cc-total"); if (total) total.textContent = comments.length;
+        const floating = $("cc-floating-total"); if (floating) floating.textContent = comments.length;
+    }
+
+    function renderList() {
+        const list = $("cc-list");
+        if (!list) return;
+        const shown = (selParagraph === null ? comments : comments.filter(c => pIndexOf(c) === selParagraph)).slice();
+        if (!shown.length) {
+            list.innerHTML = '<p class="cc-empty">' + (selParagraph === null
+                ? "Ainda não há comentários neste capítulo. Toque ou clique em um parágrafo para começar."
+                : "Este parágrafo ainda não tem comentários. Seja o primeiro!") + "</p>";
+            return;
+        }
+        shown.sort((a, b) => timeOf(a) - timeOf(b));
+        const me = mode === "firebase" && firebase.auth().currentUser ? firebase.auth().currentUser.uid : null;
+        list.innerHTML = shown.map(c => {
+            const date = new Date(timeOf(c)).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
+            const quote = c.quote ? '<div class="cc-quote">“' + safe(c.quote) + "”</div>" : "";
+            const del = me && c.uid === me ? '<div style="text-align:right;margin-top:8px"><button type="button" class="cc-delete" data-delete="' + safe(c.id) + '">Excluir</button></div>' : "";
+            return '<div class="cc-card"><div class="cc-card-top"><strong>' + safe(c.author || c.name || "Leitor(a)") + "</strong><span>" + date + "</span></div>" +
+                '<button type="button" class="cc-jump" data-jump="' + pIndexOf(c) + '">' + paragraphLabel(pIndexOf(c)) + "</button>" +
+                quote + "<p>" + safe(c.text) + "</p>" + del + "</div>";
+        }).join("");
+    }
+    $("cc-list").addEventListener("click", e => {
+        const del = e.target.closest("[data-delete]"), jump = e.target.closest("[data-jump]");
+        if (del) deleteComment(del.dataset.delete);
+        else if (jump) jumpToParagraph(Number(jump.dataset.jump));
+    });
+
+    function jumpToParagraph(index) {
+        const root = textRoot();
+        const paragraph = root && root.querySelector('[data-paragraph-index="' + Number(index) + '"]');
+        if (!paragraph) return;
+        selectParagraph(index, "", { openPanel: false });
+        const mobile = isMobile();
+        if (mobile) closeModal(); // no celular o pop-up cobre o texto: fecha antes de rolar
+        // No celular espera o pop-up terminar de fechar (rolagem restaurada) antes de rolar até o parágrafo.
+        setTimeout(() => paragraph.scrollIntoView({ behavior: "smooth", block: "center" }), mobile ? 220 : 0);
+    }
+
+    // ===== Ganchos chamados pela leitura =====
+    window.commentsChapterRendered = () => {
+        closeModal();
+        selParagraph = null; selQuote = "";
+        $("cc-target-label").textContent = "Toque ou clique em um parágrafo para comentar.";
+        $("cc-quote-preview").classList.add("hidden");
+        setupSelection();
+        loadChapterComments();
+    };
+    window.commentsLeaveReader = () => {
+        closeModal();
+        if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+        comments = [];
+    };
+    window.openCommentsModal = openModal;
+    window.closeCommentsModal = closeModal;
+    window.clearCommentTarget = clearTarget;
+    window.addParagraphComment = addComment;
+    window.commentOnPendingSelection = commentOnPendingSelection;
+
+    initializeComments();
+    // Se a página abriu direto em #cap-N, a leitura renderizou antes deste script existir.
+    if (inReader() && currentChapter !== null) window.commentsChapterRendered();
+})();
+</script>
 </body>
 </html>
