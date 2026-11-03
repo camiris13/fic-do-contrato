@@ -593,9 +593,9 @@
           {name:'Via Dutra · Primeiro desejo',area:'Rodovia Presidente Dutra · SP',region:'br',lat:-23.356,lng:-46.058,chapter:13,dir:'t'},
           {name:'Estúdio de tatuagem',area:'Avenida Paulista · São Paulo',region:'br',lat:-23.562,lng:-46.654,chapter:14,dir:'t'},
           {name:'Bar do jogo',area:'Próximo ao Allianz Parque · São Paulo',region:'br',lat:-23.527,lng:-46.679,chapter:14,dir:'t'},
-          {name:'Panteão',area:'Piazza della Rotonda · Roma',region:'it',lat:41.8986,lng:12.4769,chapter:30,dir:'b'},
-          {name:'Ristorante e Caffè Domiziano',area:'Piazza Navona · Roma',region:'it',lat:41.8992,lng:12.4723,chapter:30,dir:'l'},
-          {name:'Fontana di Trevi',area:'Piazza di Trevi · Roma',region:'it',lat:41.9009,lng:12.4833,chapter:30,dir:'r'},
+          {name:'Panteão',area:'Piazza della Rotonda · Roma',region:'it',lat:41.8986,lng:12.4769,chapter:29,dir:'b'},
+          {name:'Ristorante e Caffè Domiziano',area:'Piazza Navona · Roma',region:'it',lat:41.8992,lng:12.4723,chapter:29,dir:'l',note:'Primeiro lugar do filme que Lorena vai conhecer em Roma (Comer, Rezar e Amar).'},
+          {name:'Fontana Di Trevi',area:'Piazza Di Trevi · Roma',region:'it',lat:41.9009,lng:12.4833,chapter:30,dir:'r',note:'Elas vão ver a fonte à noite, e Lorena joga a moeda.'},
           {name:'L’Antica Pizzeria da Michele',area:'Nápoles · Itália',region:'it',lat:40.8494,lng:14.2633,chapter:31,dir:'t'},
           {name:'Comprinhas da Lorena',area:'Nova Delhi · Índia',region:'in',lat:28.6328,lng:77.2197,chapter:32,dir:'r'},
           {name:'Yogatreya',area:'Hanuman Road · Connaught Place · Nova Delhi',region:'in',lat:28.6305,lng:77.2165,chapter:32,dir:'l'},
@@ -694,7 +694,7 @@
                 const read = (place.chapter && byNum.has(place.chapter))
                     ? '<button type="button" class="fm-btn fm-go" onclick="ficOpenChapter(' + place.chapter + ')">📖 Ler capítulo ' + place.chapter + '</button>'
                     : '<span class="fm-soon">' + (place.chapter ? 'Capítulo ' + place.chapter + ' ainda não disponível para leitura' : 'Em breve') + '</span>';
-                detail.innerHTML = '<h2>' + ficLabel(place) + '</h2><p>' + place.area + (place.chapter ? ' · aparece no capítulo ' + place.chapter : '') + '</p><div class="fm-row">' + read + tourBtn + '</div>';
+                detail.innerHTML = '<h2>' + ficLabel(place) + '</h2><p>' + place.area + (place.chapter ? ' · aparece no capítulo ' + place.chapter : '') + '</p>' + (place.note ? '<p>' + place.note + '</p>' : '') + '<div class="fm-row">' + read + tourBtn + '</div>';
             }
             if (fly && ficMap && place) ficGo([place.lat, place.lng], Math.max(ficMap.getZoom(), place.region === 'br' ? 14 : 15), 1.4);
             ficDeclutter();
@@ -954,7 +954,7 @@ Enquanto não te chegam os alegres e belos olhos daquela que, em lágrimas, veio
                 '<div class="chapter-end">' + (byNum.has(n + 1) ? '· fim do capítulo ' + n + ' ·' : '· fim por enquanto ·') + '</div>';
             document.getElementById('btn-prev').disabled = !byNum.has(n - 1);
             document.getElementById('btn-next').disabled = !byNum.has(n + 1);
-            document.title = (c.t || 'Capítulo ' + c.n) + ' — Como conquistar (e perder) uma mulher em 30 dias';
+            document.title = 'Como conquistar (e perder) uma mulher em 30 dias';
             switchTab('leitura');
             window.scrollTo(0, 0);
         }
