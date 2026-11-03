@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como conquistar (e perder) uma mulher em 30 dias</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter e Playfair/Special Elite -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Mrs+Saint+Delafield&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        palmeiras: {
+                            deep: '#006437',
+                            DEFAULT: '#006437',
+                            emerald: '#006437',
+                            light: '#006437',
+                        },
+                        accentRed: '#C8102E',
+                        accentRedHover: '#9B0B21',
+                        cardDark: '#121C16',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Courier Prime', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fundo sutil com padronagem */
+        body {
+            background-color: #ffffff;
+            /* Listras verticais finas: verde com linhas vermelhas ao lado, fundo branco */
+            background-image: repeating-linear-gradient(
+                90deg,
+                #006437 0px,   #006437 4px,
+                #ffffff 4px,   #ffffff 8px,
+                #C8102E 8px,   #C8102E 9px,
+                #ffffff 9px,   #ffffff 28px
+            );
+            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Efeito da Pasta de Escritório 3D */
+        .folder-wrapper {
+            perspective: 1800px;
+            cursor: pointer;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Desloca um pouco a pasta para a direita para a capa aberta caber à esquerda */
+        .folder-wrapper.open {
+            transform: translateX(26px);
+        }
+
+        .folder-back {
+            background: linear-gradient(135deg, #004225 0%, #006437 100%);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), inset 0 0 0 2px #C8102E;
+        }
+
+        .folder-tab {
+            background: #004225;
+            border-top: 2px solid #C8102E;
+            border-left: 2px solid #C8102E;
+            border-right: 2px solid #C8102E;
+        }
+
+        .folder-cover {
+            /* Capa articulada na lateral esquerda: abre para o lado, como uma pasta de verdade */
+            transform-style: preserve-3d;
+            transform-origin: left center;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.25s;
+        }
+
+        .cover-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .cover-front {
+            background: linear-gradient(145deg, #00502a, #00331c);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.4);
+        }
+
+        .cover-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(225deg, #003d22, #005a30);
+            box-shadow: inset 0 0 0 2px rgba(200, 16, 46, 0.6), 0 8px 16px rgba(0,0,0,0.35);
+        }
+
+        /* Abrindo: a capa gira para a esquerda (sem atraso) */
+        .folder-wrapper.open .folder-cover {
+            transform: rotateY(-100deg);
+            transition-delay: 0s;
+        }
+
+        /* Documento Interno */
+        .contract-paper {
+            background: #fdfbf7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            /* Fechando: o papel desce primeiro, depois a capa fecha */
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+            font-family: 'Noto Serif', Georgia, serif;
+        }
+
+        /* Abrindo: o papel sobe depois que a capa começa a abrir para o lado */
+        .folder-wrapper.open .contract-paper {
+            transform: translateY(-38px) scale(1.03);
+            transition-delay: 0.25s;
+        }
+
+        /* Leitor dos trechos do contrato */
+        .reader {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.6s ease, opacity 0.5s ease, margin-top 0.6s ease;
+        }
+        .reader.show {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            margin-top: 1rem;
+        }
+        .reader > div { overflow: hidden; min-height: 0; }
+        .reader-paper {
+            background: #fdfbf7;
+            border: 1px solid #cbd5e1;
+            border-top: 3px solid #C8102E;
+            border-radius: 6px;
+            padding: 14px;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Courier Prime', monospace;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+        .reader-text {
+            font-size: 12px;
+            line-height: 1.65;
+            color: #1e293b;
+            white-space: pre-line;
+            transition: opacity 0.3s ease;
+        }
+        .reader-text.fade { opacity: 0; }
+
+        /* Contrato: fonte serifada e assinaturas fictícias */
+        .contract-serif { font-family: 'Noto Serif', Georgia, 'Times New Roman', serif; }
+        .sig {
+            font-family: 'Mrs Saint Delafield', 'Brush Script MT', 'Segoe Script', cursive;
+            color: #1d3a8a;
+            line-height: 1;
+            display: block;
+            white-space: nowrap;
+            transform: rotate(-4deg);
+        }
+        .mini-h { font-size: 6.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin: 5px 0 1px; color: #1e293b; }
+        .mini-p { font-size: 6.5px; line-height: 1.35; color: #334155; }
+
+        /* Linha decorativa vermelha */
+        .red-accent-line {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #C8102E, transparent);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121C16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #006437;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-3 sm:p-6 text-slate-800">
+
+    <!-- Container Principal com Formato Mobile / Card Centrado -->
+    <main class="w-full max-w-md mx-auto space-y-4">
+
+        <!-- HEADER NAVEGAÇÃO -->
+        <header class="bg-cardDark p-1.5 rounded-full border border-palmeiras-emerald/40 shadow-lg flex items-center justify-between">
+            <!-- Título / Logotipo Esquerda -->
+            <div class="flex items-center space-x-2 pl-4 pr-2 py-1">
+                <i class="fa-solid fa-folder-closed text-accentRed text-lg"></i>
+                <span class="font-bold text-white text-sm tracking-wider uppercase">A FIC DO CONTRATO</span>
+            </div>
+
+            <!-- Abas Direita -->
+            <nav class="flex items-center space-x-1">
+                <button id="btn-pasta" onclick="switchTab('pasta')" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-palmeiras-emerald text-white shadow-md transition-all border border-palmeiras-light/30">
+                    Pasta
+                </button>
+                <button id="btn-capitulos" onclick="switchTab('capitulos')" class="px-4 py-1.5 rounded-full text-xs font-semibold text-gray-300 hover:text-white transition-all hover:bg-white/10">
+                    Capítulos
+                </button>
+            </nav>
+        </header>
+
+        <!-- SEÇÃO VIEW: PASTA (VISUAL PRINCIPAL) -->
+        <div id="view-pasta" class="space-y-4 transition-all duration-300">
+            
+            <!-- CARD PRINCIPAL (PASTA E TÍTULO) -->
+            <section class="bg-cardDark rounded-3xl p-6 border-2 border-palmeiras-emerald/50 shadow-2xl relative overflow-hidden text-center">
+                <!-- Efeito Visual de Fundo -->
+                <div class="absolute -top-10 -left-10 w-32 h-32 bg-palmeiras/20 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-accentRed/10 rounded-full blur-2xl"></div>
+
+                <!-- CONTAINER ILUSTRAÇÃO DA PASTA DA FIC -->
+                <div class="folder-wrapper my-4 relative mx-auto w-64 h-72 flex flex-col items-center justify-end" id="folder-container" onclick="toggleFolder()">
+                    
+                    <!-- Aba Superior da Pasta -->
+                    <div class="folder-tab absolute top-2 left-4 w-28 h-6 rounded-t-lg flex items-center justify-center z-0">
+                        <span class="text-[9px] text-white/70 font-mono tracking-widest uppercase">DOC. #2026-A</span>
+                    </div>
+
+                    <!-- Fundo / Interior da Pasta -->
+                    <div class="folder-back absolute inset-x-0 bottom-0 top-6 rounded-lg z-0 flex flex-col justify-end p-3">
+                        <div class="border border-dashed border-red-500/30 h-full rounded p-2"></div>
+                    </div>
+
+                    <!-- FOLHA DE CONTRATO (Saindo da pasta) -->
+                    <div class="contract-paper absolute w-52 h-56 top-8 rounded border border-slate-300 px-3 py-2.5 z-10 text-left flex flex-col justify-between overflow-hidden" onclick="event.stopPropagation(); openContractModal()">
+                        <div>
+                            <div class="flex justify-between items-start border-b border-red-800/20 pb-0.5 mb-1.5">
+                                <span class="text-[6px] uppercase font-bold text-red-700 tracking-wide">CONFIDENCIAL</span>
+                                <span class="text-[6px] text-gray-500">REF: 30-DIAS</span>
+                            </div>
+                            <h4 class="text-[9px] font-bold text-slate-900 uppercase text-center tracking-wider border-b-2 border-slate-700 pb-0.5 mb-1">
+                                Contrato de Sociedade
+                            </h4>
+                            <p class="mini-h">Partes</p>
+                            <p class="mini-p"><b>Santiago Ferette</b> · CPF: 455.182.233-89<br><b>Lorena Ferette</b> · CPF: 466.199.675-56</p>
+                            <p class="mini-h">Objeto do contrato</p>
+                            <p class="mini-p line-clamp-3">Eu, Santiago Ferette, portador do CPF 455.182.233-89, concordo em tornar Lorena Ferette, portadora do CPF 466.199.675-56, sócia e proprietária da empresa Looking Great Magazine, com 30% de participação societária e um aumento de 30% em seu salário.</p>
+                            <p class="mini-h">Cláusulas</p>
+                            <p class="mini-p">I — Decoro e Sigilo<br>II — Quebra de Sigilo<br>III — Prazo</p>
+                        </div>
+
+                        <!-- Assinaturas fictícias -->
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div>
+                                <span class="sig text-[17px]">S. Ferette</span>
+                                <div class="h-px bg-slate-700"></div>
+                                <p class="text-[6px] font-bold text-slate-700 mt-0.5">Santiago Ferette</p>
+                            </div>
+                            <div>
+                                <span class="sig text-[17px]">Lorena F.</span>
+                                <div class="h-px bg-slate-700"></div>
+                                <p class="text-[6px] font-bold text-slate-700 mt-0.5">Lorena Ferette</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CAPA DA PASTA (Frente) -->
+                    <div class="folder-cover absolute inset-x-0 bottom-0 top-6 z-20">
+                        <!-- FRENTE da capa -->
+                        <div class="cover-face cover-front rounded-lg border-t-2 border-accentRed p-4 flex flex-col justify-between items-center">
+                        <div class="w-full flex justify-between items-center border-b border-white/10 pb-2">
+                            <i class="fa-solid fa-shield-halved text-palmeiras text-xs"></i>
+                            <span class="text-[9px] font-mono text-palmeiras/80 tracking-widest">PASTA OFICIAL</span>
+                        </div>
+
+                        <!-- Texto na Capa -->
+                        <div class="my-auto text-center px-1">
+                            <div class="text-accentRed text-lg font-bold mb-1">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <h3 class="text-white font-bold tracking-wider text-xs sm:text-sm font-mono leading-tight uppercase border-y border-red-500/50 py-2">
+                                ACORDO DE CONFIDENCIALIDADE
+                            </h3>
+                        </div>
+
+                        <!-- Detalhes de Rodapé da Pasta -->
+                        <div class="w-full flex justify-between items-center text-[8px] text-palmeiras/60 font-mono">
+                            <span>REGISTRO: 1914</span>
+                            <span class="text-accentRed font-bold">● RESTRITO</span>
+                        </div>
+                    </div>
+                        <!-- VERSO da capa (aparece quando abre para o lado) -->
+                        <div class="cover-face cover-back rounded-lg p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2 text-[8px] font-mono text-palmeiras/70 tracking-widest">
+                                <span>INTERIOR</span>
+                                <span class="text-accentRed font-bold">30 DIAS</span>
+                            </div>
+                            <div class="my-auto text-center text-[9px] font-mono text-palmeiras/70 leading-relaxed px-2">
+                                Termo de convivência provisória.<br>Leia antes de assinar.
+                            </div>
+                            <div class="border-t border-red-500/40 pt-2 text-center text-[8px] font-mono text-palmeiras/50 tracking-widest">
+                                A FIC DO CONTRATO
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEITOR DOS TRECHOS DO CONTRATO -->
+                <div id="contract-reader" class="reader">
+                    <div>
+                        <div class="reader-paper" onclick="nextClause()">
+                            <div class="flex justify-between items-center border-b border-red-800/20 pb-1 mb-3">
+                                <span id="reader-counter" class="text-[9px] uppercase font-bold text-red-700 tracking-wider">Cláusula 1</span>
+                                <span class="text-[9px] text-gray-500">toque para avançar</span>
+                            </div>
+                            <div id="reader-text" class="reader-text fade"></div>
+                            <p id="reader-ref" class="text-[10px] italic text-slate-500 text-right mt-3"></p>
+                            <div id="reader-dots" class="flex justify-center gap-1.5 mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Linha Divisória de Destaque -->
+                <div class="red-accent-line w-3/4 mx-auto my-3"></div>
+
+                <!-- TÍTULO DA FANFIC -->
+                <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase leading-tight">
+                    Como conquistar <span class="text-palmeiras">(e perder)</span> uma mulher em 30 dias
+                </h1>
+
+                <!-- SUBTÍTULO -->
+                <p class="text-xs sm:text-sm text-accentRed font-semibold tracking-widest uppercase mt-1">
+                    — A Fic do Contrato —
+                </p>
+
+                <!-- BOTÃO ABRIR / INTERAÇÃO -->
+                <div class="mt-5">
+                    <button onclick="toggleFolder()" class="inline-flex items-center space-x-2 bg-gradient-to-r from-palmeiras-emerald to-palmeiras hover:from-palmeiras hover:to-palmeiras-deep text-white text-xs font-bold px-5 py-2.5 rounded-full border-2 border-accentRed shadow-lg transition-transform active:scale-95">
+                        <i class="fa-solid fa-folder-open text-amber-300"></i>
+                        <span id="btn-folder-text">Toque para Abrir o Contrato</span>
+                    </button>
+                    <div class="mt-3">
+                        <button onclick="openContractModal()" class="text-[11px] font-semibold text-white/70 hover:text-white underline underline-offset-4 transition-colors">Ler o contrato completo</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CARD "SOBRE A HISTÓRIA" E DIÁLOGOS -->
+            <section class="bg-white/95 backdrop-blur-sm rounded-3xl p-5 border-2 border-palmeiras/20 shadow-xl space-y-4">
+                
+                <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2.5 h-6 bg-accentRed rounded-full"></span>
+                        <h2 class="text-sm font-extrabold text-palmeiras tracking-wider uppercase">
+                            Sobre a História
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Sinopse -->
+                <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                    <p>
+                        Após uma desilusão amorosa, Eduarda Fragoso se muda para São Paulo para recomeçar a vida como fotógrafa em uma das maiores revistas do Brasil. Engraçada, intensa e incapaz de passar despercebida, ela fez uma promessa silenciosa: <span class="font-bold text-slate-900">Nunca mais se apaixonar.</span>
+                    </p>
+                    <p>
+                        Lorena Ferette, filha do CEO da revista e diretora de marketing, vive presa entre a lealdade à família e os próprios princípios. Quando um escândalo ameaça destruir o nome dos Ferette, Lorena é forçada a aceitar um acordo perigoso e Eduarda acaba envolvida nele.
+                    </p>
+                    <p>
+                        Um contrato. Um segredo. E regras que nenhuma das duas consegue seguir.
+                    </p>
+                </div>
+
+            </section>
+        </div>
+
+        <!-- SEÇÃO VIEW: CAPÍTULOS (Escondida por padrão) -->
+        <div id="view-capitulos" class="hidden space-y-3 transition-all duration-300">
+            <section class="bg-cardDark rounded-3xl p-5 border-2 border-palmeiras-emerald/50 shadow-2xl text-white">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                    <h2 class="text-sm font-bold text-palmeiras uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-list-ol text-accentRed"></i> Índice de Capítulos
+                    </h2>
+                    <span class="text-xs text-slate-400">30/30 Dias</span>
+                </div>
+
+                <div class="space-y-2 max-h-96 overflow-y-auto pr-1">
+                    <!-- Lista Simulação Capítulos -->
+                    <a href="#" onclick="readChapter(1)" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-palmeiras/40 border border-white/5 hover:border-accentRed/50 transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-7 h-7 rounded-lg bg-accentRed flex items-center justify-center text-xs font-bold text-white">01</span>
+                            <div>
+                                <h3 class="text-xs font-bold group-hover:text-palmeiras transition-colors">Dia 1: A Proposta e a Assinatura</h3>
+                                <p class="text-[10px] text-slate-400">O início das cláusulas de confidencialidade.</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:text-white transition-colors"></i>
+                    </a>
+
+                    <a href="#" onclick="readChapter(2)" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-palmeiras/40 border border-white/5 hover:border-accentRed/50 transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-7 h-7 rounded-lg bg-palmeiras flex items-center justify-center text-xs font-bold text-white">02</span>
+                            <div>
+                                <h3 class="text-xs font-bold group-hover:text-palmeiras transition-colors">Dia 5: Perto Demais dos Limites</h3>
+                                <p class="text-[10px] text-slate-400">Testando a validade da Cláusula 3.</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:text-white transition-colors"></i>
+                    </a>
+
+                    <a href="#" onclick="readChapter(3)" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-palmeiras/40 border border-white/5 hover:border-accentRed/50 transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-7 h-7 rounded-lg bg-palmeiras flex items-center justify-center text-xs font-bold text-white">03</span>
+                            <div>
+                                <h3 class="text-xs font-bold group-hover:text-palmeiras transition-colors">Dia 15: Meio Termo e Caos</h3>
+                                <p class="text-[10px] text-slate-400">Quando o acordo começa a ruir.</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:text-white transition-colors"></i>
+                    </a>
+
+                    <a href="#" onclick="readChapter(4)" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-palmeiras/40 border border-white/5 hover:border-accentRed/50 transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-7 h-7 rounded-lg bg-palmeiras flex items-center justify-center text-xs font-bold text-white">04</span>
+                            <div>
+                                <h3 class="text-xs font-bold group-hover:text-palmeiras transition-colors">Dia 29: Quebra de Contrato</h3>
+                                <p class="text-[10px] text-slate-400">As consequências inevitáveis.</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:text-white transition-colors"></i>
+                    </a>
+
+                    <a href="#" onclick="readChapter(5)" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-palmeiras/40 border border-white/5 hover:border-accentRed/50 transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-7 h-7 rounded-lg bg-accentRed flex items-center justify-center text-xs font-bold text-white">05</span>
+                            <div>
+                                <h3 class="text-xs font-bold group-hover:text-palmeiras transition-colors">Dia 30: O Fim da Sociedade</h3>
+                                <p class="text-[10px] text-slate-400">Como perder quem você conquistou.</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500 group-hover:text-white transition-colors"></i>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- MODAL / NOTIFICAÇÃO LEITURA -->
+        <div id="modal-read" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div class="bg-cardDark border-2 border-accentRed rounded-2xl p-6 max-w-sm w-full text-center space-y-4">
+                <div class="w-12 h-12 bg-accentRed/20 text-accentRed rounded-full flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <h3 class="text-white font-bold text-lg" id="modal-title">Abrindo Capítulo...</h3>
+                <p class="text-slate-300 text-xs leading-relaxed" id="modal-body">
+                    Carregando o documento confidencial correspondente aos termos deste dia.
+                </p>
+                <button onclick="closeModal()" class="w-full py-2 bg-palmeiras hover:bg-palmeiras-emerald text-white font-bold text-xs rounded-xl border border-palmeiras/40">
+                    Continuar Lendo
+                </button>
+            </div>
+        </div>
+
+        <!-- MODAL: CONTRATO COMPLETO -->
+        <div id="contract-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4" onclick="if (event.target === this) closeContractModal()">
+            <div class="relative w-full max-w-md">
+                <button onclick="closeContractModal()" aria-label="Fechar contrato" class="absolute -top-3 -right-2 z-10 w-8 h-8 rounded-full bg-accentRed text-white text-sm flex items-center justify-center shadow-lg border-2 border-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="contract-serif max-h-[85vh] overflow-y-auto bg-[#f7f7f5] border border-slate-300 rounded-lg shadow-2xl p-6 text-slate-800 text-[15px] leading-relaxed">
+                    <h2 class="text-center text-xl tracking-widest uppercase text-slate-900 border-b-2 border-slate-700 pb-3 mb-6">Contrato de Sociedade</h2>
+
+                    <h3 class="font-bold tracking-wide uppercase text-slate-900 mb-2">Partes</h3>
+                    <p class="mb-3"><b>Santiago Ferette</b><br>CPF: 455.182.233-89</p>
+                    <p class="mb-6"><b>Lorena Ferette</b><br>CPF: 466.199.675-56</p>
+
+                    <h3 class="font-bold tracking-wide uppercase text-slate-900 mb-2">Objeto do Contrato</h3>
+                    <p class="mb-6">Eu, Santiago Ferette, portador do CPF 455.182.233-89, concordo em tornar Lorena Ferette, portadora do CPF 466.199.675-56, sócia e proprietária da empresa <i>Looking Great Magazine</i>, localizada na Av. Bela Vista, 833, com 30% de participação societária e um aumento de 30% em seu salário.</p>
+
+                    <h3 class="font-bold tracking-wide uppercase text-slate-900 mb-3">Cláusulas</h3>
+                    <h4 class="font-bold text-slate-900 mb-1">I — Decoro e Sigilo</h4>
+                    <p class="mb-4">Lorena Ferette compromete-se a manter absoluto decoro e sigilo sobre o processo sofrido pela <i>Looking Great Magazine</i>. Apenas as testemunhas assinantes terão conhecimento deste contrato e demais informações contidas.</p>
+                    <hr class="border-slate-300 mb-4">
+                    <h4 class="font-bold text-slate-900 mb-1">II — Quebra de Sigilo</h4>
+                    <p class="mb-4">A quebra de sigilo pela parte resultará em sua demissão e poderá acarretar ações cíveis e penais, seguindo a natureza do ato.</p>
+                    <hr class="border-slate-300 mb-4">
+                    <h4 class="font-bold text-slate-900 mb-1">III — Prazo</h4>
+                    <p class="mb-6">O prazo de vigência deste acordo é de 30 dias a partir da assinatura do contrato, podendo ser prorrogado por mais 30 dias.</p>
+
+                    <h3 class="font-bold tracking-wide uppercase text-slate-900 mb-4">Assinaturas</h3>
+                    <div class="text-center mb-5">
+                        <span class="sig text-[44px] -mb-1">Santiago Ferette</span>
+                        <div class="h-px bg-slate-700 mb-2"></div>
+                        <p class="font-bold">Santiago Ferette</p>
+                        <p>SA Associados</p>
+                        <p class="italic">Looking Great Magazine</p>
+                    </div>
+                    <div class="text-center mb-8">
+                        <span class="sig text-[44px] -mb-1">Lorena Ferette</span>
+                        <div class="h-px bg-slate-700 mb-2"></div>
+                        <p class="font-bold">Lorena Ferette</p>
+                    </div>
+
+                    <h3 class="font-bold tracking-wide uppercase text-slate-900 mb-4">Testemunhas</h3>
+                    <div class="text-center mb-5">
+                        <span class="sig text-[40px] -mb-1">Leonardo Ferette</span>
+                        <div class="h-px bg-slate-700 mb-2"></div>
+                        <p>Leonardo Ferette</p>
+                    </div>
+                    <div class="text-center">
+                        <span class="sig text-[40px] -mb-1">Antônio Bittencourt</span>
+                        <div class="h-px bg-slate-700 mb-2"></div>
+                        <p>Antônio Bittencourt</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS DE INTERAÇÃO -->
+    <script>
+        // Alternar visualização entre Pasta e Capítulos
+        function switchTab(tab) {
+            const btnPasta = document.getElementById('btn-pasta');
+            const btnCapitulos = document.getElementById('btn-capitulos');
+            const viewPasta = document.getElementById('view-pasta');
+            const viewCapitulos = document.getElementById('view-capitulos');
+
+            if (tab === 'pasta') {
+                viewPasta.classList.remove('hidden');
+                viewCapitulos.classList.add('hidden');
+
+                btnPasta.className = "px-4 py-1.5 rounded-full text-xs font-semibold bg-palmeiras-emerald text-white shadow-md transition-all border border-palmeiras-light/30";
+                btnCapitulos.className = "px-4 py-1.5 rounded-full text-xs font-semibold text-gray-300 hover:text-white transition-all hover:bg-white/10";
+            } else {
+                viewPasta.classList.add('hidden');
+                viewCapitulos.classList.remove('hidden');
+
+                btnCapitulos.className = "px-4 py-1.5 rounded-full text-xs font-semibold bg-palmeiras-emerald text-white shadow-md transition-all border border-palmeiras-light/30";
+                btnPasta.className = "px-4 py-1.5 rounded-full text-xs font-semibold text-gray-300 hover:text-white transition-all hover:bg-white/10";
+            }
+        }
+
+        // Trechos do contrato, na ordem dos cantos da Comédia
+        const clauses = [
+            {
+                ref: "Canto III — Inferno de Dante",
+                text: `Por mim se vai à cidade dolente,
+por mim se vai à eterna dor,
+por mim se vai à gente perdida.
+A justiça moveu o meu alto criador;
+fizeram-me a divina potestade,
+a suma sabedoria e o primeiro amor.
+Antes de mim, não foi criado
+nada senão eterno, e eterna eu duro.
+Deixai toda esperança, ó vós que entrais.`
+            },
+            {
+                ref: "Canto I — Purgatório de Dante",
+                text: `Que as velas da nau de meu engenho enfunem-se, para singrar águas melhores, agora que deixam para trás mar tão cruel. Cantarei aquele segundo reino onde o espírito humano se purga e torna-se digno de subir ao céu.`
+            },
+            {
+                ref: "Canto XXVII — Purgatório de Dante",
+                text: `— Acalma-te, deixa de lado teus temores e vem, entra tranquilo!
+Mas mantinha-me rígido, contra a minha consciência. Vendo-me assim, Virgílio disse-me, um tanto agitado:
+– Ora, meu filho, Beatriz está entre este muro e ti. Tal como Píramo abrira os olhos, já morrendo, ao ouvir Tisbe chamá-lo, na hora em que a amora tornava-se vermelha.
+Perdi a rigidez ao ouvir o nome daquela que a minha mente sempre se renova
+
+Assim que penetrei no fogo, desejei jogar-me num vidro fervente para refrescar-me, tal era o calor desmesurado lá dentro.
+Para me confortar, meu doce pai falava de Beatriz enquanto caminhava:
+– Parece-me já poder ver-lhe os olhos.`
+            },
+            {
+                ref: "Canto XXVII — Purgatório de Dante",
+                text: `Depois de percorrermos toda a escada e chegarmos ao último degrau, Virgílio me encarou e disse:
+
+— Filho, já viste o fogo temporário e o eterno, agora chegaste ao lugar que o meu discernimento não alcança. Trouxe-te até aqui com engenho e arte; agora tua arte mesma te guiará em direção ao bem, pois não caminhas mais pelas vias tortas e estreitas. Vê o sol que esplende à tua frente, vê a relva, as flores e os arbustos que a terra aqui sozinha produz.
+
+Enquanto não te chegam os alegres e belos olhos daquela que, em lágrimas, veio até mim por ti, senta-te um pouco na relva ou anda entre elas.
+
+— Não esperes mais nem minhas palavras nem meus gestos. Livre, reto e são é teu arbítrio agora, e não o seguir seria um erro: assim te declaro guia, senhor e mestre de ti mesmo`
+            },
+            {
+                ref: "Canto XXVI — Paraíso de Dante",
+                text: `Esse amor imprime-se em mim pelos argumentos filosóficos e pela palavra da autoridade que daqui descende, porque o bem, enquanto tal, como a mente o entende, inflama amor tanto maior é a bondade que contém em si mesmo. A mente amorosa de todo aquele que discerne a verdade que fundamenta este argumento se dirige ao sumo bem, que supera todo o bem que se encontra fora dele, que não é outra coisa senão uma luz entre seus raios. Quem me esclarece essa verdade é aquele que me demonstra ser o primeiro amor, o fim de todas as substâncias eternas.`
+            }
+        ];
+
+        let contractOpen = false;
+        let currentClause = -1;
+        let clauseTimer = null;
+        let runToken = 0;
+
+        // Tempo de leitura proporcional ao tamanho do trecho
+        function readingTime(text) {
+            return 5000 + text.length * 45;
+        }
+
+        function renderDots(active) {
+            const box = document.getElementById('reader-dots');
+            box.innerHTML = clauses.map((_, i) =>
+                `<span class="w-1.5 h-1.5 rounded-full ${i === active ? 'bg-accentRed' : 'bg-slate-300'}"></span>`
+            ).join('');
+        }
+
+        function showClause(i) {
+            const token = ++runToken;
+            const textEl = document.getElementById('reader-text');
+            currentClause = i;
+            clearTimeout(clauseTimer);
+            textEl.classList.add('fade');
+
+            setTimeout(() => {
+                if (token !== runToken) return;
+                textEl.textContent = clauses[i].text;
+                document.getElementById('reader-ref').textContent = clauses[i].ref;
+                document.getElementById('reader-counter').textContent = `Cláusula ${i + 1} de ${clauses.length}`;
+                renderDots(i);
+                textEl.classList.remove('fade');
+
+                clauseTimer = setTimeout(() => {
+                    if (token === runToken) nextClause();
+                }, readingTime(clauses[i].text));
+            }, 300);
+        }
+
+        // Avança para o próximo trecho; depois do último, o contrato é fechado
+        function nextClause() {
+            if (!contractOpen) return;
+            clearTimeout(clauseTimer);
+            if (currentClause + 1 < clauses.length) {
+                showClause(currentClause + 1);
+            } else {
+                closeContract();
+            }
+        }
+
+        function openContract() {
+            contractOpen = true;
+            const token = ++runToken;
+            document.getElementById('folder-container').classList.add('open');
+            document.getElementById('btn-folder-text').textContent = "Fechar Contrato";
+            document.getElementById('contract-reader').classList.add('show');
+            renderDots(-1);
+            // começa o primeiro trecho quando a pasta já está abrindo
+            setTimeout(() => {
+                if (token === runToken) showClause(0);
+            }, 900);
+        }
+
+        function closeContract() {
+            contractOpen = false;
+            runToken++;
+            clearTimeout(clauseTimer);
+            currentClause = -1;
+            document.getElementById('contract-reader').classList.remove('show');
+            document.getElementById('folder-container').classList.remove('open');
+            document.getElementById('btn-folder-text').textContent = "Toque para Abrir o Contrato";
+        }
+
+        // Alternar Abertura/Fechamento da Pasta
+        function toggleFolder() {
+            if (contractOpen) {
+                closeContract();
+            } else {
+                openContract();
+            }
+        }
+
+        // Contrato completo
+        function openContractModal() {
+            const m = document.getElementById('contract-modal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function closeContractModal() {
+            const m = document.getElementById('contract-modal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeContractModal();
+        });
+
+        // Abrir Modal de Capítulo
+        function readChapter(num) {
+            const modal = document.getElementById('modal-read');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+
+            title.textContent = `Carregando Capítulo ${num}`;
+            body.textContent = `Redirecionando para as cláusulas e acontecimentos do Dia ${num} do contrato de 30 dias...`;
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-read').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
